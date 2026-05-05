@@ -169,7 +169,22 @@ jobs:
           for migration_file in ./migrations/*.sql; do
             if [ -f "$migration_file" ]; then
               echo "Executing migration: $(basename $migration_file)"
-              wrangler d1 execute moontvplus --remote --file="$migration_file" || echo "⚠️ Migration may have been skipped (already applied)"
+
+              set +e
+              migration_output=$(wrangler d1 execute moontvplus --remote --file="$migration_file" 2>&1)
+              migration_status=$?
+              set -e
+
+              echo "$migration_output"
+
+              if [ "$migration_status" -ne 0 ]; then
+                if echo "$migration_output" | grep -q "duplicate column name"; then
+                  echo "⚠️ Migration column already exists, continuing"
+                else
+                  echo "❌ Migration failed"
+                  exit "$migration_status"
+                fi
+              fi
             fi
           done
 
