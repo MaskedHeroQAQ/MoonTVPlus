@@ -15,6 +15,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     name: Deploy to Cloudflare Pages
+    timeout-minutes: 30
 
     steps:
       - name: Checkout source code
@@ -141,8 +142,7 @@ jobs:
           append_var WATCH_ROOM_EXTERNAL_SERVER_URL "${{ secrets.WATCH_ROOM_EXTERNAL_SERVER_URL }}"
           append_var WATCH_ROOM_SERVER_TYPE "${{ secrets.WATCH_ROOM_SERVER_TYPE }}"
           
-          echo "Updated wrangler.toml:"
-          cat wrangler.toml
+          echo "Updated wrangler.toml with configured variables."
 
       - name: Build for Cloudflare
         run: pnpm run build:cloudflare
