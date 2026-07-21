@@ -63,7 +63,6 @@
     "hls.js": "^1.6.10",
     "https-proxy-agent": "^7.0.6",
     "@libsql/client": "^0.15.0",
-    "@libsql/isomorphic-ws": "0.1.5",
     "lucide-react": "^0.438.0",
     "media-icons": "^1.1.5",
     "mux.js": "^6.3.0",

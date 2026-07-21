@@ -107,6 +107,7 @@ const createNextConfig = (phase) => {
             'libsql',
             '@libsql/isomorphic-fetch',
             '@libsql/isomorphic-ws',
+            ...(isCloudflare ? ['@libsql/client/http'] : []),
           ].map((pkg) => [
             pkg,
             path.resolve(
